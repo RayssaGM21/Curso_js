@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Estudos</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <h1>Meu Painel de Estudos</h1>
+                <button id="toggle-theme" class="theme-toggle" aria-label="Alternar tema">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <section class="section-header">
+                <button class="add-task-btn" onclick="abrirModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Nova Tarefa
+                </button>
+            </section>
+
+            <section id="tasks-section" class="tasks-section">
+                <h2>Atividades</h2>
+                <div id="tasks-container" class="tasks-container"></div>
+            </section>
+        </main>
+
+        <div id="modal" class="modal">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Adicionar Tarefa</h3>
+                    <button class="close-btn" onclick="fecharModal()" aria-label="Fechar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <form id="study-form" class="study-form">
+                    <div class="form-group">
+                        <label for="subject">Matéria</label>
+                        <input type="text" id="subject" placeholder="Nome da Matéria" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Data</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="color">Cor</label>
+                        <input type="color" id="color" value="#6366f1">
+                    </div>
+                    <button type="submit" class="submit-btn">Salvar</button>
+                </form>
+            </div>
+        </div>
+
+        <template id="task-template">
+            <div class="task-card">
+                <div class="task-color-indicator"></div>
+                <div class="task-info">
+                    <div class="task-subject"></div>
+                    <div class="task-date"></div>
+                    <div class="task-holiday"></div>
+                </div>
+                <div class="task-actions">
+                    <button class="edit-task" aria-label="Editar tarefa">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </button>
+                    <button class="delete-task" aria-label="Excluir tarefa">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <script>
+        const form = document.getElementById('study-form');
+        const subjectInput = document.getElementById('subject');
+        const dateInput = document.getElementById('date');
+        const colorInput = document.getElementById('color');
+        const modal = document.getElementById('modal');
+        const tasksContainer = document.getElementById('tasks-container');
+        const themeToggle = document.getElementById('toggle-theme');
+
+        let feriados = [];
+        let tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+        let indexEditando = null;
+
+        const abrirModal = () => {
+            modal.classList.add('open');
+            document.body.classList.add('modal-open');
+        };
+
+        const fecharModal = () => {
+            modal.classList.remove('open');
+            document.body.classList.remove('modal-open');
+            form.reset();
+            indexEditando = null;
+        };
+
+        window.onclick = (e) => {
+            if (e.target.classList.contains('modal-backdrop')) fecharModal();
+        };
+
+        const loadFeriados = async () => {
+            const anoAtual = new Date().getFullYear();
+            try {
+                const res = await fetch(`https://brasilapi.com.br/api/feriados/v1/${anoAtual}`);
+                feriados = await res.json();
+            } catch (err) {
+                console.error('Erro ao carregar feriados:', err);
+            }
+        };
+
+        const salvarTarefas = () => {
+            localStorage.setItem('tarefas', JSON.stringify(tarefas));
+        };
+
+        const exibirTarefas = () => {
+            tarefas.sort((a, b) => new Date(a.data) - new Date(b.data));
+            tasksContainer.innerHTML = '';
+
+            if (tarefas.length === 0) {
+                tasksContainer.innerHTML = '<div class="empty-state">Nenhuma tarefa adicionada. Clique em "Nova Tarefa" para começar.</div>';
+                return;
+            }
+
+            tarefas.forEach((tarefa, index) => {
+                const template = document.getElementById('task-template');
+                const clone = template.content.cloneNode(true);
+                const card = clone.querySelector('.task-card');
+                const colorIndicator = clone.querySelector('.task-color-indicator');
+                colorIndicator.style.backgroundColor = tarefa.cor;
+
+                clone.querySelector('.task-subject').textContent = tarefa.materia;
+                const [ano, mes, dia] = tarefa.data.split('-');
+                const data = new Date(ano, mes - 1, dia);
+                clone.querySelector('.task-date').textContent = data.toLocaleDateString('pt-BR', {
+                    weekday: 'long',
+                    day: '2-digit',
+                    month: 'long'
+                });
+
+                const feriado = feriados.find(f => f.date === tarefa.data);
+                if (feriado) {
+                    const holidayEl = clone.querySelector('.task-holiday');
+                    holidayEl.textContent = `${feriado.name}`;
+                    holidayEl.classList.add('holiday-alert');
+                }
+
+                clone.querySelector('.edit-task').addEventListener('click', () => editarTarefa(index));
+                clone.querySelector('.delete-task').addEventListener('click', () => excluirTarefa(index));
+
+                tasksContainer.appendChild(clone);
+            });
+        };
+
+        const editarTarefa = (index) => {
+            const tarefa = tarefas[index];
+            subjectInput.value = tarefa.materia;
+            dateInput.value = tarefa.data;
+            colorInput.value = tarefa.cor;
+            indexEditando = index;
+            abrirModal();
+        };
+
+        const excluirTarefa = (index) => {
+            if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+                tarefas.splice(index, 1);
+                salvarTarefas();
+                exibirTarefas();
+            }
+        };
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const novaTarefa = {
+                materia: subjectInput.value,
+                data: dateInput.value,
+                cor: colorInput.value
+            };
+
+            if (indexEditando !== null) {
+                tarefas[indexEditando] = novaTarefa;
+                indexEditando = null;
+            } else {
+                tarefas.push(novaTarefa);
+            }
+
+            salvarTarefas();
+            exibirTarefas();
+            fecharModal();
+        });
+
+        const aplicarTema = (tema) => {
+            document.body.setAttribute('data-theme', tema);
+            localStorage.setItem('tema', tema);
+        };
+
+        themeToggle.addEventListener('click', () => {
+            const temaAtual = document.body.getAttribute('data-theme') || 'claro';
+            aplicarTema(temaAtual === 'claro' ? 'escuro' : 'claro');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const temaSalvo = localStorage.getItem('tema') || 'claro';
+            aplicarTema(temaSalvo);
+            loadFeriados().then(() => {
+                exibirTarefas();
+            });
+        });
+    </script>
+</body>
+
+</html>
