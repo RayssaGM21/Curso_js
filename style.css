@@ -31,10 +31,11 @@
   --shadow: rgba(0, 0, 0, 0.3);
   --header-bg: #1e293b;
   --modal-bg: rgba(0, 0, 0, 0.7);
+
 }
 
 * {
-  margin: 0;
+
   padding: 0;
   box-sizing: border-box;
 }
