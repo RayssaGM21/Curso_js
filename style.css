@@ -14,7 +14,6 @@
   --warning: #f59e0b;
   --header-bg: #f8fafc;
   --modal-bg: rgba(0, 0, 0, 0.5);
-
   --transition-speed: 0.2s;
   --border-radius: 8px;
 }
@@ -31,7 +30,6 @@
   --shadow: rgba(0, 0, 0, 0.3);
   --header-bg: #1e293b;
   --modal-bg: rgba(0, 0, 0, 0.7);
-
 }
 
 * {
